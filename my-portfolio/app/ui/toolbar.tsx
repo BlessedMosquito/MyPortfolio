@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 export default function Toolbar() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const openTimeoutRef = useRef<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -23,6 +24,14 @@ export default function Toolbar() {
       return () => window.removeEventListener("click", handleClick);
     }
   }, [open]);
+
+  useEffect(() => {
+    return () => {
+      if (openTimeoutRef.current) {
+        window.clearTimeout(openTimeoutRef.current);
+      }
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:border-zinc-800 dark:bg-zinc-950/80">
@@ -46,7 +55,18 @@ export default function Toolbar() {
               type="button"
               aria-expanded={open}
               aria-haspopup="menu"
-              onClick={() => setOpen((value) => !value)}
+              onClick={() => {
+                if (openTimeoutRef.current) {
+                  window.clearTimeout(openTimeoutRef.current);
+                }
+                if (open) {
+                  setOpen(false);
+                  return;
+                }
+                openTimeoutRef.current = window.setTimeout(() => {
+                  setOpen(true);
+                }, 100);
+              }}
               className="h-8 rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-700 shadow-sm transition-colors hover:border-zinc-300 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-400/40 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:hover:text-zinc-100"
             >
               Templates
@@ -63,31 +83,31 @@ export default function Toolbar() {
                 <svg
                   aria-hidden="true"
                   className="pointer-events-none absolute left-1/2 top-0 h-6 w-[220px] -translate-x-1/2 text-zinc-300 dark:text-zinc-700"
-                  viewBox="0 0 220 26"
+                  viewBox="0 0 250 30"
                   fill="none"
                 >
                   <path
                     d="
-                      M 26,26
-                      C 26,0
-                        110,26
-                        110,0"
+                      M 0,30
+                      C 20,0
+                        120,40
+                        125,0"
                     stroke="currentColor"
                     strokeWidth="1.5"
                     fill="none"
                   />
                   <path
-                    d="M110 26 C110 6 110 6 110 0"
+                    d="M125 30 C125 6 125 6 125 0"
                     stroke="currentColor"
                     strokeWidth="1.5"
                     fill="none"
                   />
                   <path
                     d="
-                      M 194,26
-                      C 194,0
-                        110,26
-                        110,0"
+                      M 240, 30
+                      C 230, 0
+                        130,40
+                        125, 0"
                     stroke="currentColor"
                     strokeWidth="1.5"
                     fill="none"
@@ -96,32 +116,32 @@ export default function Toolbar() {
                 <button
                   type="button"
                   onClick={() => {
-                    router.push("/templates/portfolio");
+                    router.push("/templates/construction");
                     setOpen(false);
                   }}
-                  className="h-10 w-16 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
+                  className="h-10 w-20 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
                 >
-                  Port
+                  Construction
                 </button>
                 <button
                   type="button"
                   onClick={() => {
-                    router.push("/templates/landing");
+                    router.push("/templates/beauty");
                     setOpen(false);
                   }}
-                  className="h-10 w-16 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
+                  className="h-10 w-20 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
                 >
-                  Land
+                  Beauty
                 </button>
                 <button
                   type="button"
                   onClick={() => {
-                    router.push("/templates/blog");
+                    router.push("/templates/fitness");
                     setOpen(false);
                   }}
-                  className="h-10 w-16 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
+                  className="h-10 w-20 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
                 >
-                  Blog
+                  Fitness
                 </button>
               </div>
             </div>
