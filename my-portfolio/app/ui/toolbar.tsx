@@ -116,7 +116,7 @@ export default function Toolbar() {
                 <button
                   type="button"
                   onClick={() => {
-                    router.push("/templates/construction");
+                    router.push("/construction");
                     setOpen(false);
                   }}
                   className="h-10 w-20 rounded-full border border-zinc-300 bg-zinc-200 text-[11px] font-semibold text-white shadow-sm transition-all hover:blur-[1px] dark:border-zinc-700 dark:bg-zinc-800"
