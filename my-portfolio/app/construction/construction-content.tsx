@@ -41,16 +41,6 @@ export default function ConstructionContent() {
           </span>
         </div>
 
-        <div className="mt-4 flex items-center justify-center text-center">
-          <h1
-            className={`text-2xl font-semibold transition-all duration-700 sm:text-4xl ${
-              showTitle ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-          >
-            Under construction
-          </h1>
-        </div>
-
         <div className="mt-6 flex flex-1 flex-col items-center justify-center gap-7">
           <div
             className={`relative w-full max-w-2xl rounded-3xl border border-zinc-200 bg-[#fff8c6] p-10 text-left shadow-[0_12px_30px_rgba(0,0,0,0.12)] transition-all duration-700 ${
