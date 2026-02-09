@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import background2 from "@/app/construction/photos/background2.jpg";
+import Toolbar from "../custom_components/Toolbar";
+import PageOpening from "../custom_components/PageOpening";
 
 export default function ConstructionContent() {
   const router = useRouter();
@@ -10,6 +13,7 @@ export default function ConstructionContent() {
   const [navTarget, setNavTarget] = useState<null | "gallery" | "contact">(null);
   const [expandRect, setExpandRect] = useState<DOMRect | null>(null);
   const [isExpanding, setIsExpanding] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const galleryRef = useRef<HTMLButtonElement | null>(null);
   const contactRef = useRef<HTMLButtonElement | null>(null);
 
@@ -28,9 +32,41 @@ export default function ConstructionContent() {
     return () => window.cancelAnimationFrame(id);
   }, [expandRect]);
 
+  const handleToolbarNavigate = (href: string) => {
+    if (!href) return;
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    window.setTimeout(() => {
+      router.push(href);
+    }, 900);
+    window.setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1400);
+  };
+
   return (
-    <div className="min-h-screen bg-white text-black">
-      <section className="mx-auto flex min-h-screen max-w-5xl flex-col px-6 pb-20 pt-10">
+    <div className="relative min-h-screen bg-white text-black">
+      <PageOpening isActive={isTransitioning} />
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden="true"
+      >
+        <div
+          className="absolute inset-0 bg-cover opacity-90 blur-[1px]"
+          style={{ backgroundImage: `url(${background2.src})` }}
+        />
+        <div className="absolute inset-0 from-transparent via-white/70 to-white" />
+      </div>
+      <section className="relative mx-auto flex min-h-screen max-w-5xl flex-col px-6 pb-20 pt-10">
+          <Toolbar
+            companyName="Company Name"
+            buttons={[
+              { label: "About Us", href: "" },
+              { label: "Our Projects", href: "/construction/gallery" },
+              { label: "Contact", href: "" },
+            ]}
+            onNavigate={handleToolbarNavigate}
+          />
         <div className="flex items-center justify-center">
           <span
             className={`text-2xl font-semibold uppercase tracking-[0.4em] text-zinc-800 transition-all duration-700 sm:text-3xl ${
