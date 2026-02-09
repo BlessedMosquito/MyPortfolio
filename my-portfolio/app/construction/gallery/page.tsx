@@ -1,11 +1,29 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import ExpandButton from "@/app/custom_components/ExpandButton";
+import PageOpening from "@/app/custom_components/PageOpening";
 
 export default function ConstructionGalleryPage() {
   const tiles = Array.from({ length: 6 }, (_, index) => index + 1);
+  const [isOpening, setIsOpening] = useState(true);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsOpening(false);
+    }, 1400);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-black flex-col items-center justify-center">
-      <section className="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-16 text-center">
+      <PageOpening isActive={isOpening} />
+      <section
+        className={`mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 py-16 text-center transition-opacity duration-300 ${
+          isOpening ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
+      >
         <div className="mb-6 self-start ml-2">
           <ExpandButton href="/construction" variant="dark">
             Back

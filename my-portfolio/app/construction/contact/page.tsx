@@ -1,7 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+import PageOpening from "@/app/custom_components/PageOpening";
+
 export default function ConstructionContactPage() {
+  const [isOpening, setIsOpening] = useState(true);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setIsOpening(false);
+    }, 1400);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen bg-white text-black">
-      <section className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-16">
+      <PageOpening isActive={isOpening} />
+      <section
+        className={`mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-16 transition-opacity duration-300 ${
+          isOpening ? "pointer-events-none opacity-0" : "opacity-100"
+        }`}
+      >
         <div className="door-reveal w-full rounded-3xl border border-zinc-200 bg-white p-10 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
           <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
             <div className="flex-1 text-left">

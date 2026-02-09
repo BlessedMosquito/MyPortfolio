@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import background2 from "@/app/construction/photos/background2.jpg";
 import Toolbar from "../custom_components/Toolbar";
-import PageOpening from "../custom_components/PageOpening";
 
 export default function ConstructionContent() {
   const router = useRouter();
@@ -13,7 +12,6 @@ export default function ConstructionContent() {
   const [navTarget, setNavTarget] = useState<null | "gallery" | "contact">(null);
   const [expandRect, setExpandRect] = useState<DOMRect | null>(null);
   const [isExpanding, setIsExpanding] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const galleryRef = useRef<HTMLButtonElement | null>(null);
   const contactRef = useRef<HTMLButtonElement | null>(null);
 
@@ -34,19 +32,11 @@ export default function ConstructionContent() {
 
   const handleToolbarNavigate = (href: string) => {
     if (!href) return;
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    window.setTimeout(() => {
-      router.push(href);
-    }, 900);
-    window.setTimeout(() => {
-      setIsTransitioning(false);
-    }, 1400);
+    router.push(href);
   };
 
   return (
     <div className="relative min-h-screen bg-white text-black">
-      <PageOpening isActive={isTransitioning} />
       <div
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
@@ -63,7 +53,7 @@ export default function ConstructionContent() {
             buttons={[
               { label: "About Us", href: "" },
               { label: "Our Projects", href: "/construction/gallery" },
-              { label: "Contact", href: "" },
+              { label: "Contact", href: "/construction/contact" },
             ]}
             onNavigate={handleToolbarNavigate}
           />
