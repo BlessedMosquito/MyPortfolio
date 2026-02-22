@@ -85,48 +85,6 @@ export default function ConstructionContent() {
               showText ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
             }`}
           >
-            <button
-              type="button"
-              ref={galleryRef}
-              onClick={() => {
-                const rect = galleryRef.current?.getBoundingClientRect();
-                if (!rect) return;
-                setNavTarget("gallery");
-                setExpandRect(rect);
-                setIsExpanding(false);
-                window.setTimeout(() => {
-                  router.push("/construction/gallery");
-                }, 500);
-              }}
-              className={`rounded-full border border-zinc-800 bg-zinc-900 px-5 py-2 text-sm font-semibold text-white transition-all ${
-                navTarget === "gallery"
-                  ? "scale-110 shadow-[0_16px_30px_rgba(0,0,0,0.25)]"
-                  : "hover:-translate-y-0.5 hover:bg-black"
-              }`}
-            >
-              Gallery
-            </button>
-            <button
-              type="button"
-              ref={contactRef}
-              onClick={() => {
-                const rect = contactRef.current?.getBoundingClientRect();
-                if (!rect) return;
-                setNavTarget("contact");
-                setExpandRect(rect);
-                setIsExpanding(false);
-                window.setTimeout(() => {
-                  router.push("/construction/contact");
-                }, 500);
-              }}
-              className={`rounded-full border border-zinc-300 bg-white px-5 py-2 text-sm font-semibold text-zinc-900 transition-all ${
-                navTarget === "contact"
-                  ? "scale-110 shadow-[0_16px_30px_rgba(0,0,0,0.18)]"
-                  : "hover:-translate-y-0.5 hover:border-zinc-400"
-              }`}
-            >
-              Contact
-            </button>
           </div>
         </div>
       </section>

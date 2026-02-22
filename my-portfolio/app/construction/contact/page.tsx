@@ -3,9 +3,13 @@
 import { useEffect, useState } from "react";
 
 import PageOpening from "@/app/custom_components/PageOpening";
+import Toolbar from "@/app/custom_components/Toolbar";
+import background2 from "@/app/construction/photos/background2.jpg";
+import { useRouter } from "next/navigation";
 
 export default function ConstructionContactPage() {
   const [isOpening, setIsOpening] = useState(true);
+    const router = useRouter();
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -14,15 +18,41 @@ export default function ConstructionContactPage() {
     return () => window.clearTimeout(timer);
   }, []);
 
+
+    const handleToolbarNavigate = (href: string) => {
+    if (!href) return;
+    router.push(href);
+  };
+
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="relative min-h-screen bg-white text-black">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div
+          className="absolute inset-0 bg-cover opacity-90 blur-[1px]"
+          style={{ backgroundImage: `url(${background2.src})` }}
+        />
+        <div className="absolute inset-0 from-transparent via-white/70 to-white" />
+      </div>
+    <section className="relative mx-auto flex max-w-5xl flex-col px-6 pt-10">
+      <Toolbar
+        companyName="Company Name"
+        buttons={[
+          { label: "About Us", href: "/construction" },
+          { label: "Our Projects", href: "/construction/gallery" },
+          { label: "Contact", href: "/construction/contact" },
+        ]}
+        onNavigate={handleToolbarNavigate}
+      />
+    </section>
       <PageOpening isActive={isOpening} />
       <section
-        className={`mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-16 transition-opacity duration-300 ${
+        className={`relative mx-auto flex max-w-6xl flex-col items-center px-6 pb-16 pt-8 transition-opacity duration-300 ${
           isOpening ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
+
         <div className="door-reveal w-full rounded-3xl border border-zinc-200 bg-white p-10 shadow-[0_20px_40px_rgba(0,0,0,0.08)]">
+          
           <div className="flex flex-col gap-10 lg:flex-row lg:items-stretch">
             <div className="flex-1 text-left">
               <h1 className="text-3xl font-semibold sm:text-5xl">Contact</h1>
